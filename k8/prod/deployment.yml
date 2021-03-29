@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zcore-node
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: zcore-node
+  template:
+    metadata:
+      labels:
+        app: zcore-node
+    spec:
+      containers:
+        - name: zcore-node
+          image: rafaeltoky0/zcore:0.0.1
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8332
+              name: rpc
+          command:
+            - "zcored"
+          args:
+            - "-printtoconsole"
+            - "-rpcallowip=0.0.0.0"
+            - "-rpcbind=0.0.0.0"
+            - "-rpcuser=dev"
+            - "-rpcpassword=dev"
+            - "-rpcport=8332"

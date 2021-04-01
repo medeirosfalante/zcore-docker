@@ -1,5 +1,11 @@
 #!/bin/sh
+
+
+cp /zcore/zcore.conf /home/zcore/.zcore
+
+
 set -e
+
 
 if [ $(echo "$1" | cut -c1) = "-" ]; then
   echo "$0: assuming arguments for zcored"
@@ -7,11 +13,9 @@ if [ $(echo "$1" | cut -c1) = "-" ]; then
   set -- zcored "$@"
 fi
 
-if [ $(echo "$1" | cut -c1) = "-" ] || [ "$1" = "zcored" ]; then
-  mkdir -p "$KICKSOCCER_DATA"
-  chmod 700 "$KICKSOCCER_DATA"
-  chown -R zcore "$KICKSOCCER_DATA"
 
+
+if [ $(echo "$1" | cut -c1) = "-" ] || [ "$1" = "zcored" ]; then
   echo "$0: setting data directory to $KICKSOCCER_DATA"
 
   set -- "$@" -datadir="$KICKSOCCER_DATA"
